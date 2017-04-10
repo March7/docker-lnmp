@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+
+### PHP-FPM Container #######################################
+
+    php-fpm:
+      build:
+        context: ./php
+      volumes:
+        - ./www:/var/www/html
+      expose:
+        - "9000"
+      depends_on:
+        - mysql
+
+### Nginx Server Container ##################################
+
+    nginx:
+      build:
+        context: ./nginx
+      volumes:
+          - ./www:/var/www/html
+      ports:
+          - "80:80"
+          - "443:443"
+      depends_on:
+          - php-fpm
+
+### MySQL Container #########################################
+
+    mysql:
+      image: mysql:5.7
+      volumes:
+        - mysql-data:/var/lib/mysql
+      ports:
+        - "3306:3306"
+      environment:
+        - MYSQL_ROOT_PASSWORD=123456
+
+### Volumes Setup ###########################################
+
+volumes:
+    mysql-data:
