@@ -6,17 +6,17 @@ docker的基础用法请参考官方文档
 
 [中文文档参考](https://github.com/yeasy/docker_practice/blob/master/SUMMARY.md)。
 
-## docker-composer
+## docker-compose
 
-docker-composer是用来管理编排多个容器协作的。
+docker-compose是用来管理编排多个容器协作的。
 
-通过docker-composer.yml来编排nginx、php、mysql之间的通信和协作。
+通过docker-compose.yml来编排nginx、php、mysql之间的通信和协作。
 
-在docker-lnmp目录下通过命令 docker-composer up 启动容器
+在docker-lnmp目录下通过命令 docker-compose up 启动容器
 
 然后通过 localhost或者localhost:8000就可以访问index.php了
 
-## docker-composer.yml简单介绍
+## docker-compose.yml简单介绍
 
 ### Mysql
 
