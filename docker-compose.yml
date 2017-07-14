@@ -2,17 +2,33 @@ version: '3'
 
 services:
 
+### Applications Code Container #############################
+
+    # web:
+    #   image: debian:jessie
+    #   volumes:
+    #     - ./www:/var/www
+
 ### PHP-FPM Container #######################################
 
     php-fpm:
       build:
         context: ./php
       volumes:
-        - ./www:/var/www/html
+        - ../www:/var/www/html
       expose:
         - "9000"
       depends_on:
         - mysql
+
+### PHP-CLI Container #######################################
+
+    php-cli:
+      build:
+        context: ./php-cli
+      volumes:
+        - ../www:/var/www/html
+      tty: true
 
 ### Nginx Server Container ##################################
 
@@ -20,9 +36,9 @@ services:
       build:
         context: ./nginx
       volumes:
-          - ./www:/var/www/html
+          - ../www:/var/www/html
       ports:
-          - "80:80"
+          - "8000:80"
           - "443:443"
       depends_on:
           - php-fpm
@@ -37,6 +53,15 @@ services:
         - "3306:3306"
       environment:
         - MYSQL_ROOT_PASSWORD=123456
+
+### PHPMyAdmin Container #########################################
+
+    phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      ports:
+        - "8080:80"
+      links:
+          - mysql:db
 
 ### Volumes Setup ###########################################
 
